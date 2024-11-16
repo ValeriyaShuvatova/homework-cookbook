@@ -1,3 +1,7 @@
+from importlib.metadata import files
+from operator import itemgetter
+from socket import socket
+
 cook_book = {}
 
 with open('recipes.txt', encoding='utf-8') as file:
@@ -36,64 +40,35 @@ def get_shop_list_by_dishes(dishes, person_count):
 
 
 
+import os
 
-def rewrite_file():
+list = ("1.txt", "2.txt", "3.txt")
+
+
+
+for item in list:
+    list_final = []
     with open("1.txt", 'r', encoding='utf-8') as f1:
-        x_1 = len(f1.readlines())
-        # print(x_1)
+        file1 = f1.readlines()
+        list_general = ("1.txt", len(file1), file1)
+        list_final.append(list_general)
     with open("2.txt", 'r', encoding='utf-8') as f2:
-        x_2 = len(f2.readlines())
-        # print(x_2)
-
+        file2 = f2.readlines()
+        list_general = ("2.txt", len(file2), file2)
+        list_final.append(list_general)
     with open("3.txt", 'r', encoding='utf-8') as f3:
-        x_3 = len(f3.readlines())
-        # print(x_3)
-    with open("rewrite_file.txt", 'w', encoding='utf-8') as f_total:
+        file3 = f3.readlines()
+        list_general = ("3.txt", len(file3), file3)
+        list_final.append(list_general)
 
-        # f_total.write():
-        if x_1 < x_2 and x_1 < x_3:
-            f_total.write("1.txt" + '\n')
-            f_total.write(str(x_1) + '\n')
-            f_total.writelines(f1)
-            f_total.write('\n')
-        elif x_2 < x_1 and x_2 < x_3:
-            f_total.write("2.txt" + '\n')
-            f_total.write(str(x_2) + '\n')
-            f_total.writelines(f2)
-            f_total.write('\n')
-        elif x_3 < x_1 and x_3 < x_2:
-            f_total.write("3.txt" + '\n')
-            f_total.write(str(x_3) + '\n')
-            f_total.writelines(f3)
-            f_total.write('\n')
-        if x_2 > x_1 > x_3 or x_2 < x_1 < x_3:
-            f_total.write("1.txt" + '\n')
-            f_total.write(str(x_1) + '\n')
-            f_total.writelines(f1)
-            f_total.write('\n')
-        elif x_1 > x_2 > x_3 or x_2 > x_1 and x_2 < x_3:
-            f_total.write("2.txt" + '\n')
-            f_total.write(str(x_2) + '\n')
-            f_total.writelines(f2)
-            f_total.write('\n')
-        elif x_1 > x_3 > x_2 or x_3 > x_1 and x_3 < x_2:
-            f_total.write("3.txt" + '\n')
-            f_total.write(str(x_3) + '\n')
-            f_total.writelines(f3)
-            f_total.write('\n')
-        if x_1 > x_2 and x_1 > x_3:
-            f_total.write("1.txt" + '\n')
-            f_total.write(str(x_1) + '\n')
-            f_total.writelines(f1)
-        elif x_2 > x_1 and x_2 > x_3:
-            f_total.write("2.txt" + '\n')
-            f_total.write(str(x_2) + '\n')
-            f_total.writelines(f2)
-        elif x_3 > x_1 and x_3 > x_2:
-            f_total.write("3.txt" + '\n')
-            f_total.write(str(x_3) + '\n')
-            f_total.writelines(f3)
-    return rewrite_file()
+list_total = sorted(list_final, key=itemgetter(2), reverse=True)
+line = "\n".join(map(str, list_total))
+
+
+
+with open("rewrite_file.txt", 'w', encoding='utf-8') as f_total:
+    f_total.write(line)
+
 
 print("Задача №1")
 print("cook_book =", *cook_book.items(), sep="\n")
