@@ -1,3 +1,4 @@
+import operator
 import os.path
 import os
 
@@ -11,7 +12,7 @@ with open("recipes.txt", encoding="utf-8") as file:
         for p in range(int(ingredients_count)):
             recepie = file.readline().strip().split("|")
             product, quantity, word = recepie
-            ingredients.append({"product": product, "quantity": quantity, "measure": word})
+            ingredients.append({"product": product, "quantity": int(quantity), "measure": word})
         file.readline()
         cook_book[recepie_name] = ingredients
     print("cook_book =", *cook_book.items(), sep="\n")
@@ -35,30 +36,25 @@ get_shop_list_by_dishes(2, ["Запеченный картофель", "Омле
 
 #Задача 3
 import os
+from operator import itemgetter
 
 
-all_files = os.listdir(r"C:\Users\lera\PycharmProjects\homework_cookbook\pythonProject2")
-txt_files = filter(lambda x: x[-4:] == ".txt", all_files)
-list = list(txt_files)[:3]
-
-for item in (list):
-    list_final = []
-
+all_files = [file for file in os.listdir() if file.endswith(".txt")]
+all_files = all_files[:3]
+list_final = []
+for item in all_files:
 
     with open(item, "r", encoding="utf-8") as file:
+        read_file = file.readlines()
+        list_final.append([item, len(read_file), read_file])
 
-        file = file.readlines()
-        list_general = item[0], len(file), file
-        list_final.append(list_general)
-
-        list_total = sorted(list_final, key=itemgetter(2), reverse=True)
-
-        line = "".join(map(str, list_final))
-        print(line)
+sorted_list_final = sorted(list_final, key=itemgetter(1))
+line = "\n".join(map(str, sorted_list_final))
+# print(line)
+with open("rewrite_file.txt", 'a', encoding='utf-8') as f_total:
+      f_total.writelines(line)
 
 
-    with open("rewrite_file.txt", 'a', encoding='utf-8') as f_total:
-        f_total.writelines(line)
 
 
 
